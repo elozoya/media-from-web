@@ -1,0 +1,11 @@
+{
+  "name": "media",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-phpunit": "^0.8.4"
+  },
+  "author": "Emmanuel Lozoya"
+}

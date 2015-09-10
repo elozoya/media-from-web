@@ -1,0 +1,17 @@
+/vendor
+composer.phar
+composer.lock
+.DS_Store
+Thumbs.db
+
+### Linux ###
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+node_modules/
+
