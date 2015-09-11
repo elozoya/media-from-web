@@ -22,6 +22,17 @@ class MediaFromWebTest extends PHPUnit_Framework_TestCase
         m::close();
     }
 
+    public function testGetPhotosReturnsAnErrorResultDueToAnInvalidUrlFormat()
+    {
+        $url = "foo/url-not-well-formated";
+        $this->httpClientMock->shouldNotReceive("request");
+        $result = $this->mediaFromWeb->getPhotosFromUrl($url);
+        $this->assertEquals($result, (object)[
+          "error" => true,
+          'message' => "Invalid URL format",
+        ]);
+    }
+
     public function testGetPhotosReturnsAnErrorResultDueToAnUnsuccessfulRequest()
     {
         $url = "http://foo.com/bar-does-not-exist.png";

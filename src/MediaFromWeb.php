@@ -14,6 +14,12 @@ class MediaFromWeb
     public function getPhotosFromUrl($url)
     {
         $photos = [];
+        if (!$this->isURLValid($url)) {
+            return (object)[
+                "error" => true,
+                'message' => "Invalid URL format",
+            ];
+        }
         $response = $this->httpClient->request('HEAD', $url);
         if (!$response->isSuccessful()) {
             return (object)[
@@ -32,5 +38,10 @@ class MediaFromWeb
           "data" => $photos,
         ];
         return $result;
+    }
+
+    private function isURLValid($url)
+    {
+        return filter_var($url, FILTER_VALIDATE_URL);
     }
 }
