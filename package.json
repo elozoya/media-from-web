@@ -5,7 +5,9 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-notify": "^2.2.0",
-    "gulp-phpunit": "^0.8.4"
+    "gulp-phpcs": "^0.7.0",
+    "gulp-phpunit": "^0.8.4",
+    "gulp-shell": "^0.4.3"
   },
   "author": "Emmanuel Lozoya"
 }
