@@ -4,6 +4,14 @@ use PHPUnit_Framework_TestCase;
 use Mockery as m;
 use Elozoya\MediaFromWeb\MediaFromWeb;
 
+/*
+ * MediaFromWebTest
+ * ================
+ *
+ * TODO:
+ *  - Photo is too big
+ *  - Photo timeout
+ */
 class MediaFromWebTest extends PHPUnit_Framework_TestCase
 {
     private $httpClientMock;
