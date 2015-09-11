@@ -46,4 +46,18 @@ class MediaFromWebTest extends PHPUnit_Framework_TestCase
           'message' => "Photos not found due to an unsupported request",
         ]);
     }
+
+    public function testGetPhotosReturnsAPhoto()
+    {
+        $url = "http://foo.com/photo.png";
+        $this->httpClientMock->shouldReceive("request")->once()->with('HEAD', $url)->andReturn($this->responseMock);
+        $this->responseMock->shouldReceive('isSuccessful')->once()->andReturn(true);
+        $this->responseMock->shouldReceive('getHeader')->once()->with('content-type')->andReturn("image/png");
+        $result = $this->mediaFromWeb->getPhotosFromUrl($url);
+        $this->assertEquals($result, (object)[
+            "data" => [
+                (object)["photo_src" => $url],
+            ],
+        ]);
+    }
 }

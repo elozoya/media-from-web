@@ -14,9 +14,6 @@ class MediaFromWeb
     public function getPhotosFromUrl($url)
     {
         $photos = [];
-        $result = (object)[
-          "data" => $photos,
-        ];
         $response = $this->httpClient->request('HEAD', $url);
         if (!$response->isSuccessful()) {
             return (object)[
@@ -30,6 +27,10 @@ class MediaFromWeb
                 'message' => "Photos not found due to an unsupported request",
             ];
         }
+        $photos[] = (object)["photo_src" => $url];
+        $result = (object)[
+          "data" => $photos,
+        ];
         return $result;
     }
 }
