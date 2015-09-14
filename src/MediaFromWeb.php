@@ -21,13 +21,14 @@ class MediaFromWeb
             ];
         }
         $response = $this->httpClient->request('HEAD', $url);
-        if (!$response->isSuccessful()) {
+        $statusCode = $response->getStatusCode();
+        if (!($statusCode >= 200 && $statusCode < 300)) {
             return (object)[
                 "error" => true,
                 'message' => "Photos not found or you are not allowed to get them",
             ];
         }
-        if (!in_array($response->getHeader('content-type'), $this->supportedContentTypes)) {
+        if (!$this->isContentTypeSupported($response->getHeader('content-type'))) {
             return (object)[
                 "error" => true,
                 'message' => "Photos not found due to an unsupported request",
@@ -43,5 +44,17 @@ class MediaFromWeb
     private function isURLValid($url)
     {
         return filter_var($url, FILTER_VALIDATE_URL);
+    }
+
+    private function isContentTypeSupported($contentTypeHeader)
+    {
+        if (is_array($contentTypeHeader)) {
+            foreach ($this->supportedContentTypes as $supportedContentType) {
+                if (strpos($contentTypeHeader[0], $supportedContentType) !== false) {
+                    return true;
+                }
+            }
+        }
+        return in_array($contentTypeHeader, $this->supportedContentTypes);
     }
 }

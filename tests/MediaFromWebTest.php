@@ -45,7 +45,7 @@ class MediaFromWebTest extends PHPUnit_Framework_TestCase
     {
         $url = "http://foo.com/bar-does-not-exist.png";
         $this->httpClientMock->shouldReceive("request")->once()->with('HEAD', $url)->andReturn($this->responseMock);
-        $this->responseMock->shouldReceive('isSuccessful')->once()->andReturn(false);
+        $this->responseMock->shouldReceive('getStatusCode')->once()->andReturn(404);
         $result = $this->mediaFromWeb->getPhotosFromUrl($url);
         $this->assertEquals($result, (object)[
           "error" => true,
@@ -57,7 +57,7 @@ class MediaFromWebTest extends PHPUnit_Framework_TestCase
     {
         $url = "http://foo.com/bar.xml";
         $this->httpClientMock->shouldReceive("request")->once()->with('HEAD', $url)->andReturn($this->responseMock);
-        $this->responseMock->shouldReceive('isSuccessful')->once()->andReturn(true);
+        $this->responseMock->shouldReceive('getStatusCode')->once()->andReturn(200);
         $this->responseMock->shouldReceive('getHeader')->once()->with('content-type')->andReturn("application/xml");
         $result = $this->mediaFromWeb->getPhotosFromUrl($url);
         $this->assertEquals($result, (object)[
@@ -70,7 +70,7 @@ class MediaFromWebTest extends PHPUnit_Framework_TestCase
     {
         $url = "http://foo.com/photo.png";
         $this->httpClientMock->shouldReceive("request")->once()->with('HEAD', $url)->andReturn($this->responseMock);
-        $this->responseMock->shouldReceive('isSuccessful')->once()->andReturn(true);
+        $this->responseMock->shouldReceive('getStatusCode')->once()->andReturn(200);
         $this->responseMock->shouldReceive('getHeader')->once()->with('content-type')->andReturn("image/png");
         $result = $this->mediaFromWeb->getPhotosFromUrl($url);
         $this->assertEquals($result, (object)[
